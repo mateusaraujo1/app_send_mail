@@ -5,8 +5,6 @@ class Message {
     private $subject;
     private $message;
 
-    
-
 
     public function __construct($destiny, $subject, $message)
     {
