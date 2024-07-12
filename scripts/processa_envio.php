@@ -36,20 +36,23 @@ else {
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
 
+    require 'credenciais.php'; //usado para puxar o objeto "login" 
+                               //credenciais.php está oculto para esconder os dados pessoais
+
     try {
         //Server settings
         $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'souza8383328@gmail.com';               //SMTP username
-        $mail->Password   = 'tazl cdio czny zmdf';                  //SMTP password
+        $mail->Username   = $login->emailRemetente;               //SMTP username
+        $mail->Password   = $login->senha;                  //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
-        $mail->setFrom('souza8383328@gmail.com', 'Remetente');
-        $mail->addAddress('f.mateusaraujo2000@gmail.com', 'Destinatário');     //Add a recipient
+        $mail->setFrom($login->emailRemetente, 'Remetente');
+        $mail->addAddress($login->emailDestinatario, 'Destinatário');     //Add a recipient
         //$mail->addAddress('ellen@example.com');               //Name is optional
         $mail->addReplyTo('info@example.com', 'Information');
         //$mail->addCC('cc@example.com');
