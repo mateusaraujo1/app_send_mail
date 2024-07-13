@@ -80,6 +80,8 @@ else {
 
 ?>
 
+<!-- Posteriormente vou separar esses arquivos -->
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
