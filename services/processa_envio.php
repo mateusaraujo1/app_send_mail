@@ -1,6 +1,6 @@
 <?php 
 
-require_once '../class/Message.php';
+require '../class/Message.php';
 require '../library/PHPMailer/Exception.php';
 require '../library/PHPMailer/OAuthTokenProvider.php';
 require '../library/PHPMailer/PHPMailer.php';
@@ -16,13 +16,8 @@ $message = new Message($_POST['destiny'],
                        $_POST['subject'], 
                        $_POST['message']);
 
-echo '<pre>';
-print_r($message);
-echo '</pre>';
-
-
 if (!$message->MessageValid()) {
-    echo 'Mensagem não é válida';
+    //echo 'Mensagem não é válida';
     header('Location:../index.php');
     //die();
     
@@ -42,7 +37,7 @@ else {
 
     try {
         //Server settings
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+        $mail->SMTPDebug = SMTP::DEBUG_OFF;                         //Disable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -54,7 +49,7 @@ else {
         //Recipients
         $mail->setFrom($login->emailRemetente, 'Remetente');
         $mail->addAddress($message->__get('destiny'), 'Destinatário');     //Add a recipient
-        //$mail->addAddress('ellen@example.com');               //Name is optional
+        //$mail->addAddress('ellen@example.com');                          //Name is optional
         $mail->addReplyTo('info@example.com', 'Information');
         //$mail->addCC('cc@example.com');
         //$mail->addBCC('bcc@example.com');
@@ -78,9 +73,64 @@ else {
     } catch (Exception $e) {
         
         //armazenando dados do envio
-        $message->status['cod_status'] = 1;
+        $message->status['cod_status'] = 2;
         $message->status['description_status'] = 'falha ao enviar email. Detalhes do erro: ' . $mail->ErrorInfo;
     }
-
 }
+
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>App Send Mail</title>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="py-3 text-center">
+            <img class="d-block mx-auto mb-2" src="../img/logo.png" alt="" width="72" height="72">
+            <h2>Send Mail</h2>
+            <p class="lead">Seu app de envio de e-mails particular!</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <?php 
+                
+                if($message->status['cod_status'] == 1) { ?>
+
+                <div class="container">
+                    <h1 class="display-4 text-success">Sucesso</h1>
+                    <p>Email enviado com sucesso</p>
+                    <a href="../index.php" class="btn btn-success btn-lg mt-5 text-white">Voltar</a>
+                </div>
+
+                <?php }
+
+                else { ?>
+
+                <div class="container">
+                    <h1 class="display-4 text-danger">Ops!</h1>
+                    <p>Falha ao enviar Email</p>
+                    <a href="../index.php" class="btn btn-danger btn-lg mt-5 text-white">Voltar</a>
+                </div>
+
+                <?php }?>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

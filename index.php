@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="pt-br">
 
 <head>
     <meta charset="utf-8" />
@@ -23,7 +24,7 @@
             <div class="col-md-12">
 
                 <div class="card-body font-weight-bold">
-                    <form action="scripts/processa_envio.php" method="post">
+                    <form action="services/processa_envio.php" method="post">
                         <div class="form-group">
                             <label for="destiny">Para</label>
                             <input name="destiny" type="text" class="form-control" id="destiny"
