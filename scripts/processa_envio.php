@@ -45,14 +45,14 @@ else {
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = $login->emailRemetente;               //SMTP username
-        $mail->Password   = $login->senha;                  //SMTP password
+        $mail->Username   = $login->emailRemetente;                 //SMTP username
+        $mail->Password   = $login->senha;                          //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
         $mail->setFrom($login->emailRemetente, 'Remetente');
-        $mail->addAddress($login->emailDestinatario, 'Destinatário');     //Add a recipient
+        $mail->addAddress($message->__get('destiny'), 'Destinatário');     //Add a recipient
         //$mail->addAddress('ellen@example.com');               //Name is optional
         $mail->addReplyTo('info@example.com', 'Information');
         //$mail->addCC('cc@example.com');
@@ -64,9 +64,9 @@ else {
 
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'assunto';
-        $mail->Body    = 'mensagem';
-        $mail->AltBody = 'mensagem';
+        $mail->Subject = $message->__get('subject');
+        $mail->Body    = $message->__get('message');
+        $mail->AltBody = 'Não há suporte à HTML para exibir a mensagem';
 
         $mail->send();
         echo 'Message has been sent';
