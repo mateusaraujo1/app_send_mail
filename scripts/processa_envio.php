@@ -23,7 +23,8 @@ echo '</pre>';
 
 if (!$message->MessageValid()) {
     echo 'Mensagem não é válida';
-    die();
+    header('Location:../index.php');
+    //die();
     
 }
 else {
@@ -69,9 +70,16 @@ else {
         $mail->AltBody = 'Não há suporte à HTML para exibir a mensagem';
 
         $mail->send();
-        echo 'Message has been sent';
+        
+        //armazenando dados do envio
+        $message->status['cod_status'] = 1;
+        $message->status['description_status'] = 'email enviado com sucesso';
+        
     } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        
+        //armazenando dados do envio
+        $message->status['cod_status'] = 1;
+        $message->status['description_status'] = 'falha ao enviar email. Detalhes do erro: ' . $mail->ErrorInfo;
     }
 
 }

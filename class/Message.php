@@ -4,6 +4,7 @@ class Message {
     private $destiny;
     private $subject;
     private $message;
+    public $status = array('cod_status' => null, 'description_status' => '');
 
 
     public function __construct($destiny, $subject, $message)
