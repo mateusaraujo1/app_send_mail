@@ -47,7 +47,7 @@ else {
         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
-        $mail->setFrom($login->emailRemetente, 'Remetente');
+        $mail->setFrom($login->emailRemetente, 'Mateus');
         $mail->addAddress($message->__get('destiny'), 'Destinatário');     //Add a recipient
         //$mail->addAddress('ellen@example.com');                          //Name is optional
         $mail->addReplyTo('info@example.com', 'Information');
